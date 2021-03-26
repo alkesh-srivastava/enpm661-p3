@@ -162,10 +162,10 @@ if __name__ == '__main__':
     try:
         if _method == 1:
             solution = __astar__.a_star(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
-            visited_nodes = __astar__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y)
+            visited_nodes = __astar__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
         if _method == 2:
             solution = __dijkstra__.dijkstra(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
-            visited_nodes = __dijkstra__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y)
+            visited_nodes = __dijkstra__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
 
         counter_stop = len(solution)
         testudo_pos_x = x_offset + testudo_x
