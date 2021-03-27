@@ -29,27 +29,27 @@ def obstacle(x, y):  # This function definition inspects whether a coordinate po
     inside_C2 = False
     inside_C3 = False
 
-    if ((x - 90) ** 2 + (y - 70) ** 2) <= (35 ** 2):
+    if ((x - 90) ** 2 + (y - 70) ** 2) <= (50 ** 2):  # Changed to 50 instead of 35
         inside_circle = True
-    if (y >= 0.7 * x + 74.4) and \
-            (y >= -1.42 * x + 176.16) and \
-            (y <= -1.42 * x + 436.82) and \
-            (y <= 0.7 * x + 97.18):
+    if (y >= 0.7 * x + 74.4 - 15) and \
+            (y >= -1.42 * x + 176.16 - 15) and \
+            (y <= -1.42 * x + 436.82 + 15) and \
+            (y <= 0.7 * x + 97.18 + 15):   # Change the intercepts with -15 on the lower values and +15 on higher values
         inside_rectangle = True
-    if ((x - 246) ** 2) / (60 ** 2) + (y - 145) ** 2 / (30 ** 2) <= 1:
+    if ((x - 246) ** 2) / (75 ** 2) + (y - 175) ** 2 / (45 ** 2) <= 1:  # Changed 60 to 75 and 30 to 45
         inside_ellipse = True
 
-
-    if x in range(200, 210) and y in range(240, 270):
+    if x in range(200-15, 210+15) and y in range(240-15, 270+15):   # -15 in lower limit and +15 in higher limit for
+        # all the limits
         inside_C1 = True
 
-    if x in range(200, 230) and y in range(230, 240):
+    if x in range(200-15, 230+15) and y in range(230-15, 240+15):
         inside_C2 = True
 
-    if x in range(200, 230) and y in range(270, 280):
+    if x in range(200-15, 230+15) and y in range(270-15, 280+15):
         inside_C3 = True
 
-    if inside_circle or inside_rectangle or inside_ellipse or inside_C1 or inside_C2 or inside_C3 :
+    if inside_circle or inside_rectangle or inside_ellipse or inside_C1 or inside_C2 or inside_C3:
         return True
     else:
         return False
@@ -78,6 +78,7 @@ def move_possible(maze, pos):
 
     return 0 <= i < num_rows and 0 <= j < num_cols and not (obstacle(i, j))
 
+
 # The function return_path is responsible for returning the possible moves
 # that the player should perform to reach to its final stage.
 # The function traces back its predecessors after it has reached a goal and
@@ -92,7 +93,6 @@ def return_path(predecessors, start, goal):
     path.append(start)
     path.reverse()
     return path
-
 
 
 if __name__ == "__main__":
