@@ -2,7 +2,7 @@
 import math
 from configuration import return_path, move_possible
 from priority_queue import PriorityQueue
-import math
+import math, cv2
 from matplotlib import pyplot as plt
 
 
@@ -21,7 +21,7 @@ def visualization(visited_nodes, path):
     i = 0
     while True:
         ax.quiver(visited_nodes[i][0], visited_nodes[i][1], visited_nodes[i][0] - visited_nodes[i + 1][0],
-                  visited_nodes[i][1] - visited_nodes[i + 1][1], units='xy', scale = 2)
+                  visited_nodes[i][1] - visited_nodes[i + 1][1], units='xy', scale=2)
         i += 1
         if i == (len(visited_nodes) - 1):
             break
@@ -31,11 +31,36 @@ def visualization(visited_nodes, path):
     i = 0
     while True:
         ax.quiver(path[i][0], path[i][1], path[i][0] - path[i + 1][0],
-                  path[i][1] - path[i + 1][1], units='xy', color='r', scale = 2)
+                  path[i][1] - path[i + 1][1], units='xy', color='r', scale=2)
         i += 1
         if i == (len(path) - 1):
             break
     plt.show()
+
+
+def cv2_viz(visited_nodes, path):
+    canvas = cv2.imread("images/map.png")
+    canvas = cv2.resize(canvas, (400, 300))
+    i = 0
+    while True:
+        cv2.arrowedLine(canvas, (int(2*visited_nodes[i][0]), 600 - int(2*visited_nodes[i][1])),
+                        (int(2*visited_nodes[i + 1][0]), 600 - int(2*visited_nodes[i + 1][1])),
+                        (255, 0, 0), 1, cv2.LINE_AA, 1, 0.2)
+        i += 1
+        if i == (len(visited_nodes) - 1):
+            break
+        cv2.imshow("Solution", canvas)
+        cv2.waitKey(0)
+    i = 0
+    while True:
+        cv2.arrowedLine(canvas, (int(2*path[i][0]), 600 - int(2*path[i][1])),
+                        (int(2*path[i + 1][0]), 600 - int(2*path[i + 1][1])), (0, 0, 255), 1,
+                        cv2.LINE_AA, 1, 0.2)
+        i += 1
+        if i == (len(path) - 1):
+            break
+        cv2.imshow("Solution", canvas)
+        cv2.waitKey(1)
 
 
 ##############################################
@@ -126,7 +151,7 @@ def a_star(maze, start, goal):
                 neighbour = (current_cell[0] + row_offset, current_cell[1] + col_offset, current_cell[2] + orientation)
             elif current_cell[2] + orientation > 360:
                 neighbour = (
-                current_cell[0] + row_offset, current_cell[1] + col_offset, current_cell[2] + orientation - 360)
+                    current_cell[0] + row_offset, current_cell[1] + col_offset, current_cell[2] + orientation - 360)
             elif current_cell[2] + orientation == 360:
                 neighbour = (
                     current_cell[0] + row_offset, current_cell[1] + col_offset, 0)
@@ -143,12 +168,15 @@ def a_star(maze, start, goal):
 
 
 # Execution
+puzzle = [[''] * 400] * 300
+solution, explored_path = a_star(puzzle, start, goal)
+cv2_viz(explored_path, solution)
 
-
-try:
-    puzzle = [[''] * 400] * 300
-    solution, explored_path = a_star(puzzle, start, goal)
-    # visualization(explored_path, solution)
-
-except:
-    print("Something is wrong with your input!")
+# try:
+#     puzzle = [[''] * 400] * 300
+#     solution, explored_path = a_star(puzzle, start, goal)
+#     cv2_viz(explored_path, solution)
+#     # visualization(explored_path, solution)
+#
+# except:
+#     print("Something is wrong with your input!")
