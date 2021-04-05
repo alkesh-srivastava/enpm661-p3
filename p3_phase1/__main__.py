@@ -8,6 +8,7 @@
 # terminal)
 import pygame, __astar__, __dijkstra__, cv2
 from map_creator import create_main_map
+from configuration import move_possible
 
 WIDTH, HEIGHT = 500, 400  # 50 pixel padding on each side
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -106,21 +107,21 @@ def new_viz(path_list, visited_nodes):
             pygame.draw.rect(gameDisplay, black, [point[1], point[0], 1, 1])
 
         pygame.draw.rect(gameDisplay, green, [path_list[-1][0], 300 - path_list[-1][1], 3, 3])
-        pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/project2/load.png")
+        pygame.image.save(gameDisplay, f"load.png")
         image = cv2.imread('load.png')
         out.write(image)
 
         for node in visited_nodes:
             clock.tick(100)
             pygame.draw.rect(gameDisplay, red, [node[0], 300 - node[1], 1, 1])
-            pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/enpm673-p3/load.png")
+            pygame.image.save(gameDisplay, f"load.png")
             image = cv2.imread('load.png')
             out.write(image)
 
         for point in path_list:
             clock.tick(100)
             pygame.draw.rect(gameDisplay, blue, [point[0], 300 - point[1], 1, 1])
-            pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/enpm673-p3/load.png")
+            pygame.image.save(gameDisplay, f"load.png")
             image = cv2.imread('load.png')
             out.write(image)
         done = False
@@ -128,6 +129,8 @@ def new_viz(path_list, visited_nodes):
 
 
 if __name__ == '__main__':
+    puzzle = [[''] * 400] * 300
+
     print("Input Start Position for Testudo :\nX Co-ordinate :")
     testudo_x = int(input())
     if testudo_x > 400 or testudo_x < 0:
@@ -150,27 +153,34 @@ if __name__ == '__main__':
         print("Your input contains an obstacle or there was an invalid entry.\nPLEASE RESTART THE PROGRAM!")
         raise SystemExit()
     print("Use your preferred method:\nPress 1 for Dijkstra.\nPress 2 for A*")
+    if not move_possible(puzzle, (testudo_x, testudo_y)):
+        print("The start is on a obstacle. RETRY!!")
+        raise SystemExit()
 
+    if not move_possible(puzzle, (goal_x,goal_y)):
+        print("The goal is on a obstacle. RETRY!!")
+        raise SystemExit()
     _method = int(input())
 
-    puzzle = [[''] * 400] * 300
-
     try:
+
         if _method == 2:
             solution = __astar__.a_star(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
             visited_nodes = __astar__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
         if _method == 1:
             solution = __dijkstra__.dijkstra(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
             visited_nodes = __dijkstra__.explored_path(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
+    except:
+        print("Something is wrong is returning the paths (visited nodes and solution).")
+        raise SystemExit()
+    counter_stop = len(solution)
+    testudo_pos_x = x_offset + testudo_x
+    testudo_pos_y = (y_offset - testudo_y) + y_upper_offset
+    initial_testudo = (testudo_pos_x, testudo_pos_y)
 
-        counter_stop = len(solution)
-        testudo_pos_x = x_offset + testudo_x
-        testudo_pos_y = (y_offset - testudo_y) + y_upper_offset
-        initial_testudo = (testudo_pos_x, testudo_pos_y)
-
-        print("Path:\n" + str(solution))
-        # main()
+    print("Path:\n" + str(solution))
+    try:
         new_viz(solution, visited_nodes)  # saves video
     except:
-        print("Your input contains an obstacle or there was an invalid entry.\nPLEASE RESTART THE PROGRAM!")
+        print("Path was returned SUCCESSFULLY but something is wrong with saving the video on your system.\nChange the path at the appropriate location.\nIf problem persists, check your 'write' permissions or contact creators.")
         raise SystemExit()
