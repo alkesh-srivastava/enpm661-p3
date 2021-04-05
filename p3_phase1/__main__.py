@@ -107,6 +107,7 @@ def new_viz(path_list, visited_nodes):
             pygame.draw.rect(gameDisplay, black, [point[1], point[0], 1, 1])
 
         pygame.draw.rect(gameDisplay, green, [path_list[-1][0], 300 - path_list[-1][1], 3, 3])
+        # In case of VIDEO SAVING ERROR, Enter the absolution location for saving load.png
         pygame.image.save(gameDisplay, f"load.png")
         image = cv2.imread('load.png')
         out.write(image)
@@ -114,6 +115,7 @@ def new_viz(path_list, visited_nodes):
         for node in visited_nodes:
             clock.tick(100)
             pygame.draw.rect(gameDisplay, red, [node[0], 300 - node[1], 1, 1])
+            # In case of VIDEO SAVING ERROR, Enter the absolution location for saving load.png
             pygame.image.save(gameDisplay, f"load.png")
             image = cv2.imread('load.png')
             out.write(image)
@@ -121,6 +123,7 @@ def new_viz(path_list, visited_nodes):
         for point in path_list:
             clock.tick(100)
             pygame.draw.rect(gameDisplay, blue, [point[0], 300 - point[1], 1, 1])
+            # In case of VIDEO SAVING ERROR, Enter the absolution location for saving load.png
             pygame.image.save(gameDisplay, f"load.png")
             image = cv2.imread('load.png')
             out.write(image)
