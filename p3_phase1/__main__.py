@@ -75,50 +75,6 @@ def main():
     pygame.quit()
 
 
-# def new_viz(path_list):
-#     map_of_maze, o_list = create_main_map()
-#     pygame.init()
-#
-#     gameDisplay = pygame.display.set_mode((map_of_maze.shape[1], map_of_maze.shape[0]), pygame.SCALED)
-#     pygame.display.set_caption("Solution - Animation")
-#
-#     white = (255, 255, 255)  # Background
-#     black = (0, 0, 0)  # Obstacle
-#     # red = (255, 0, 0)  # Visited Node
-#     blue = (0, 0, 255)  # Path
-#     green = (0, 255, 0)  # Goal
-#
-#     surface = pygame.surfarray.make_surface(map_of_maze)
-#
-#     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-#     out = cv2.VideoWriter('animation.avi', fourcc, 100, (
-#         map_of_maze.shape[1], map_of_maze.shape[0]))  # Increase the frame rate here(set to 750), for faster video
-#
-#     gameDisplay.fill(white)
-#
-#     clock = pygame.time.Clock()
-#
-#     done = True
-#
-#     while done:
-#         for point in o_list:
-#             pygame.draw.rect(gameDisplay, black, [point[1], point[0], 1, 1])
-#             pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/enpm673-p3/load.png")
-#
-#         pygame.draw.rect(gameDisplay, green, [path_list[-1][0], 300 - path_list[-1][1], 3, 3])
-#         pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/project2/load.png")
-#         image = cv2.imread('load.png')
-#         out.write(image)
-#
-#         for point in path_list:
-#             clock.tick(100)
-#             pygame.draw.rect(gameDisplay, blue, [point[0], 300 - point[1], 1, 1])
-#             pygame.image.save(gameDisplay, f"/home/prannoy/s21subbmissions/661/enpm673-p3/load.png")
-#             image = cv2.imread('load.png')
-#             out.write(image)
-#         done = False
-#     pygame.quit()
-
 
 def new_viz(path_list, visited_nodes):
     map_of_maze, o_list = create_main_map()
@@ -198,18 +154,7 @@ if __name__ == '__main__':
     _method = int(input())
 
     puzzle = [[''] * 400] * 300
-    # if _method == 1:
-    #     solution = __astar__.a_star(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
-    # if _method == 2:
-    #     solution = __dijkstra__.dijkstra(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
-    # counter_stop = len(solution)
-    # testudo_pos_x = x_offset + testudo_x
-    # testudo_pos_y = (y_offset - testudo_y) + y_upper_offset
-    # initial_testudo = (testudo_pos_x, testudo_pos_y)
-    #
-    # print("Path:\n" + str(solution))
-    # # main()
-    # new_viz(solution)
+
     try:
         if _method == 1:
             solution = __astar__.a_star(puzzle, (testudo_x, testudo_y), (goal_x, goal_y))
