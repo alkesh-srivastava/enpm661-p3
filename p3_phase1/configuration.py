@@ -19,8 +19,7 @@ offsets = {  # These are movement offsets, that define the motion of
     "down-right": (1, 1)
 }
 
-
-def obstacle(x, y):  # This function definition inspects whether a coordinate point x
+def obstacle(x, y, clearance = 15):  # This function definition inspects whether a coordinate point x
     # and y lie on the obstacle or not
     inside_circle = False
     inside_rectangle = False
@@ -29,24 +28,24 @@ def obstacle(x, y):  # This function definition inspects whether a coordinate po
     inside_C2 = False
     inside_C3 = False
 
-    if ((x - 90) ** 2 + (y - 70) ** 2) <= (50 ** 2):  # Changed to 50 instead of 35
+    if ((x - 90) ** 2 + (y - 70) ** 2) <= ((35+clearance) ** 2):  # Changed to 50 instead of 35
         inside_circle = True
-    if (y >= 0.7 * x + 74.4 - 15) and \
-            (y >= -1.42 * x + 176.16 - 15) and \
-            (y <= -1.42 * x + 436.82 + 15) and \
-            (y <= 0.7 * x + 97.18 + 15):   # Change the intercepts with -15 on the lower values and +15 on higher values
+    if (y >= 0.7 * x + 74.4 - clearance) and \
+            (y >= -1.42 * x + 176.16 - clearance) and \
+            (y <= -1.42 * x + 436.82 + clearance) and \
+            (y <= 0.7 * x + 97.18 + clearance):  # Change the intercepts with -15 on the lower values and +15 on higher values
         inside_rectangle = True
-    if ((x - 246) ** 2) / (75 ** 2) + (y - 175) ** 2 / (45 ** 2) <= 1:  # Changed 60 to 75 and 30 to 45
+    if ((x - 246) ** 2) / ((60+clearance) ** 2) + (y - 175) ** 2 / ((30+clearance) ** 2) <= 1:  # Changed 60 to 75 and 30 to 45
         inside_ellipse = True
 
-    if x in range(200-15, 210+15) and y in range(240-15, 270+15):   # -15 in lower limit and +15 in higher limit for
+    if 200 - clearance < x < 210 + clearance and 240 - clearance < y < 270 + clearance:  # -15 in lower limit and +15 in higher limit for
         # all the limits
         inside_C1 = True
 
-    if x in range(200-15, 230+15) and y in range(230-15, 240+15):
+    if 200 - clearance < x < 230 + clearance and 230 - clearance < y < 240 + clearance:
         inside_C2 = True
 
-    if x in range(200-15, 230+15) and y in range(270-15, 280+15):
+    if 200 - clearance < x < 230 + clearance and 270 - clearance < y < 280 + clearance:
         inside_C3 = True
 
     if inside_circle or inside_rectangle or inside_ellipse or inside_C1 or inside_C2 or inside_C3:
@@ -76,7 +75,7 @@ def move_possible(maze, pos):
     if (0 <= i < num_rows and 0 <= j < num_cols and not (obstacle(i, j))):
         all_moves(pos)
 
-    return 0 <= i < num_rows and 0 <= j < num_cols and not (obstacle(i, j))
+    return 0 <= i < num_cols and 0 <= j < num_rows and not (obstacle(i, j))
 
 
 # The function return_path is responsible for returning the possible moves
