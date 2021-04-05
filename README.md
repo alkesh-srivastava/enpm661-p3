@@ -37,7 +37,7 @@ The example of the output of this program can be accessed by clicking the link :
 Phase 2 is a twisted implementation of A-star for our mobile robot. In phase 2, our robot can move only in 5 directions :
 
 All these informations are requested by the user. Therefore, the robot that we will be building here is very user-friendly. To run this program you need to access the `p3_phase2` folder. In this folder you will only need the `__main__.py` file.
-On running this file in the shell, you will be asked to input the co-ordinates of the mobile robot as (x,y, $\theta). Please enter every information as is asked by the program. You will be asked the following :
+On running this file in the shell, you will be asked to input the co-ordinates of the mobile robot as (x,y, *theta*). Please enter every information as is asked by the program. You will be asked the following :
 1. Starting Position and Orientation of the Robot.
 2. Goal Position and Orientation of the Robot.
 3. Radius of your Mobile Robot.
@@ -48,7 +48,7 @@ On running this file in the shell, you will be asked to input the co-ordinates o
 
 The step 6 is optional, if you will leave it as blank and hit Enter the program will assume the consecutive step will move by 30 degrees. As soon as you hit enter, the real-time display of the robot will be shown and on the terminal you will see what neighbors is our robot visiting. The purpose of printing the visited nodes is to make the user aware of the fact that our robot is taking threshold of certain distance from the goal position. This ensures that the robot has reached the destination and is covering the goal point instead of needlessly roaming around the maze in hope to have its geometric centre align with the goal point.
 
-NOTE : You must also note that this program is not taking care of what is the orientation of the robot when it reaches the destination. Although, it can be a requirement in many applications and our program is designed to take care of this need (this is the reason why we are taking goal \$theta). You just need to do copy the commented code (as shown below) to the appropriate location in `a_star` definition present in `real_timeviz.py`:
+NOTE : You must also note that this program is not taking care of what is the orientation of the robot when it reaches the destination. Although, it can be a requirement in many applications and our program is designed to take care of this need (this is the reason why we are taking goal *theta*). You just need to do copy the commented code (as shown below) to the appropriate location in `a_star` definition present in `real_timeviz.py`:
 `and current_cell[2] == goal[2] `
 
 ![Output](https://github.com/alkesh-umd/enpm661-p3/blob/main/uploads/Capture6.gif)
@@ -65,4 +65,4 @@ When the program ends, you will be able to see the video in the root folder. The
 
 In case you encounter any difficulty please feel free to contact the creators - <br/>
 ***Alkesh K Srivastava*** - `{alkesh@umd.edu}`, University of Maryland, College Park <br/>
-***Hari Krishna Prannoy Namala*** - `{pnamala@umd.edu}`, University of Maryland, College Park* <br/>
+***Hari Krishna Prannoy Namala*** - `{pnamala@umd.edu}`, University of Maryland, College Park <br/>
